@@ -16,7 +16,7 @@ function App() {
       <ScrollToTop />
       <div className="min-h-screen flex flex-col bg-white">
         <Navbar />
-        <main className="flex-grow pb-20 md:pb-0"> {/* mobile pb-20 prevents content overlap with bottom nav */}
+        <main className="flex-grow"> {/* mobile pb removed — bottom nav replaced by top hamburger */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/sobre" element={<Sobre />} />

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 // Smooth scroll to a section by its id, respecting the sticky navbar height
@@ -13,6 +13,18 @@ function scrollToSection(id: string) {
 export const Navbar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Close menu on route change
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location]);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
 
   // When the page loads with a hash (e.g. /#servicos), scroll after mount
   useEffect(() => {
@@ -52,17 +64,18 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
-      {/* ─── Desktop/Tablet Header ─── */}
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-silver shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
+      {/* ─── Header (Desktop + Mobile) ─── */}
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-silver shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 md:h-20 flex items-center justify-between gap-4">
+
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="size-10 rounded-full bg-navy text-white flex items-center justify-center font-bold font-lexend text-xl group-hover:scale-105 transition-transform">
+          <Link to="/" className="flex items-center gap-2 group shrink-0">
+            <div className="size-9 md:size-10 rounded-full bg-navy text-white flex items-center justify-center font-bold font-lexend text-lg group-hover:scale-105 transition-transform">
               S
             </div>
-            <div className="hidden md:flex flex-col">
-              <span className="font-lexend font-bold text-navy leading-none">Suyane Melre</span>
-              <span className="text-[10px] uppercase tracking-widest text-executive">Consultora CFP®</span>
+            <div className="flex flex-col">
+              <span className="font-lexend font-bold text-navy leading-none text-sm md:text-base">Suyane Melre</span>
+              <span className="text-[9px] md:text-[10px] uppercase tracking-widest text-executive">Consultora CFP®</span>
             </div>
           </Link>
 
@@ -96,54 +109,79 @@ export const Navbar: React.FC = () => {
             )}
           </nav>
 
-          {/* CTA Button */}
-          <a
-            href="https://wa.me/5581994018011" target="_blank" rel="noopener noreferrer"
-            className="bg-navy text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-md hover:shadow-lg transition-all hover:scale-105 hidden sm:block"
-          >
-            Falar com Suyane
-          </a>
+          <div className="flex items-center gap-3">
+            {/* CTA Button — desktop */}
+            <a
+              href="https://wa.me/5581994018011" target="_blank" rel="noopener noreferrer"
+              className="bg-navy text-white px-5 py-2 rounded-full text-sm font-bold shadow-md hover:shadow-lg transition-all hover:scale-105 hidden md:block"
+            >
+              Falar com Suyane
+            </a>
+
+            {/* Hamburger Button — mobile only */}
+            <button
+              className="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl border border-silver bg-white gap-1.5 shrink-0"
+              onClick={() => setMenuOpen(o => !o)}
+              aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+            >
+              <span className={`block w-5 h-0.5 bg-navy transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+              <span className={`block w-5 h-0.5 bg-navy transition-all duration-300 ${menuOpen ? 'opacity-0 scale-x-0' : ''}`} />
+              <span className={`block w-5 h-0.5 bg-navy transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            </button>
+          </div>
+        </div>
+
+        {/* ─── Mobile Dropdown Menu ─── */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            menuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
+          }`}
+        >
+          <nav className="bg-white border-t border-silver/60 px-4 py-3 flex flex-col gap-1">
+            {navItems.map(({ label, to, sectionId, icon }) => {
+              const isItemActive = sectionId
+                ? location.hash === `#${sectionId}`
+                : location.pathname === to && !location.hash;
+
+              return sectionId ? (
+                <a
+                  key={label}
+                  href={to}
+                  onClick={e => handleAnchorClick(e, sectionId)}
+                  className={`flex items-center gap-4 px-4 py-3 rounded-2xl font-medium transition-colors ${
+                    isItemActive ? 'bg-navy/5 text-navy font-bold' : 'text-executive hover:bg-slate-50 hover:text-navy'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-[20px]">{icon}</span>
+                  {label}
+                </a>
+              ) : (
+                <Link
+                  key={label}
+                  to={to}
+                  className={`flex items-center gap-4 px-4 py-3 rounded-2xl font-medium transition-colors ${
+                    isItemActive ? 'bg-navy/5 text-navy font-bold' : 'text-executive hover:bg-slate-50 hover:text-navy'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-[20px]">{icon}</span>
+                  {label}
+                </Link>
+              );
+            })}
+
+            {/* CTA inside mobile menu */}
+            <div className="pt-2 mt-1 border-t border-silver">
+              <a
+                href="https://wa.me/5581994018011" target="_blank" rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full bg-navy text-white py-3 rounded-2xl font-bold hover:opacity-90 transition-opacity"
+              >
+                <span className="material-symbols-outlined text-[18px]">chat</span>
+                Falar com Suyane
+              </a>
+            </div>
+          </nav>
         </div>
       </header>
-
-      {/* ─── Mobile Bottom Nav ─── */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[60] flex gap-2 border-t border-silver bg-white/95 backdrop-blur-lg px-4 pb-6 pt-3 shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.1)]">
-        {navItems.map(({ label, to, sectionId, icon }) => {
-          const activeClass = sectionId
-            ? location.hash === `#${sectionId}` ? 'text-navy' : 'text-executive opacity-70'
-            : location.pathname === to && !location.hash ? 'text-navy' : 'text-executive opacity-70';
-
-          return sectionId ? (
-            <a
-              key={label}
-              href={to}
-              onClick={e => handleAnchorClick(e, sectionId)}
-              className={`flex flex-1 flex-col items-center justify-center gap-1 ${activeClass}`}
-            >
-              <span className="material-symbols-outlined text-[24px]">{icon}</span>
-              <p className="text-[10px] font-medium">{label}</p>
-            </a>
-          ) : (
-            <Link
-              key={label}
-              to={to}
-              className={`flex flex-1 flex-col items-center justify-center gap-1 ${activeClass}`}
-            >
-              <span className="material-symbols-outlined text-[24px]">{icon}</span>
-              <p className="text-[10px] font-medium">{label}</p>
-            </Link>
-          );
-        })}
-
-        {/* Falar com Suyane — mobile CTA */}
-        <a
-          href="https://wa.me/5581994018011" target="_blank" rel="noopener noreferrer"
-          className="flex flex-1 flex-col items-center justify-center gap-1 text-executive opacity-70"
-        >
-          <span className="material-symbols-outlined text-[24px]">chat</span>
-          <p className="text-[10px] font-medium">Contato</p>
-        </a>
-      </nav>
     </>
   );
 };
