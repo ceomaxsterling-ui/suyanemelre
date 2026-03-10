@@ -388,30 +388,31 @@ export const Home: React.FC = () => {
           </div>
 
           {/* Sticky Stack Container */}
-          <div className="flex flex-col gap-12 md:gap-24 relative">
+          <div className="flex flex-col gap-8 md:gap-24 relative">
             {mockData.home.cases.map((caseItem, index) => {
-              // Calculate sticky top offset so they stack nicely instead of perfectly overlapping
-              // e.g. first case sticks at top-24, second at top-32, third at top-40. Fixed for mobile view height
-              const stickyTopMobile = `calc(5rem + ${index * 1}rem)`;
               const stickyTopDesktop = `calc(6rem + ${index * 2}rem)`;
               
               return (
                 <div 
                   key={caseItem.id}
-                  className="sticky flex flex-col md:flex-row bg-white rounded-3xl md:rounded-[3rem] overflow-hidden shadow-2xl border border-silver/50 pb-4 md:pb-0"
-                  style={{ top: 'var(--sticky-top)' }}
-                  ref={(el) => {
-                    if (el) {
-                      el.style.setProperty('--sticky-top', window.innerWidth < 768 ? stickyTopMobile : stickyTopDesktop);
-                    }
-                  }}
+                  className="md:sticky flex flex-col md:flex-row bg-white rounded-3xl md:rounded-[3rem] overflow-hidden shadow-xl md:shadow-2xl border border-silver/50"
+                  style={{ top: stickyTopDesktop }}
                 >
+                  {/* Image — on mobile uses full natural height via aspect ratio, on desktop stretches to fill */}
+                  <div className="w-full aspect-[16/9] md:hidden relative overflow-hidden">
+                    <img 
+                      src={caseItem.image} 
+                      alt={caseItem.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
                   {/* Left: Content */}
                   <div className="flex-1 p-6 sm:p-8 md:p-16 flex flex-col justify-center gap-4 md:gap-6">
                     <span className="text-[11px] font-bold uppercase tracking-widest text-navy bg-navy/5 px-3 py-1 rounded-full inline-block w-fit">
                       Estudo de Caso 0{index + 1}
                     </span>
-                    <h3 className="text-3xl md:text-4xl font-lexend font-bold text-navy leading-tight">
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-lexend font-bold text-navy leading-tight">
                       {caseItem.title}
                     </h3>
                     <div className="flex items-center gap-3 py-4 border-y border-silver/50">
@@ -422,10 +423,10 @@ export const Home: React.FC = () => {
                         {caseItem.client}
                       </p>
                     </div>
-                    <p className="text-executive text-base md:text-lg leading-relaxed line-clamp-4 md:line-clamp-none">
+                    <p className="text-executive text-sm md:text-lg leading-relaxed">
                       {caseItem.summary}
                     </p>
-                    <div className="mt-4 md:mt-8 pt-2">
+                    <div className="pt-2">
                       <Link 
                         to={`/case/${caseItem.id}`}
                         className="inline-flex items-center justify-center gap-2 w-full md:w-auto bg-navy text-white px-8 py-3.5 md:py-4 rounded-full font-bold hover:scale-105 transition-transform shadow-lg"
@@ -436,8 +437,8 @@ export const Home: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Right: Image — aparece antes do conteúdo no mobile com flex-col-default (foto em cima) */}
-                  <div className="flex-1 min-h-[200px] sm:min-h-[260px] md:min-h-full relative overflow-hidden">
+                  {/* Right: Image — desktop only (hidden on mobile, shown above) */}
+                  <div className="hidden md:block flex-1 min-h-full relative overflow-hidden">
                     <img 
                       src={caseItem.image} 
                       alt={caseItem.title}
