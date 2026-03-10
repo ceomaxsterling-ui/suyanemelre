@@ -388,15 +388,23 @@ export const Home: React.FC = () => {
           </div>
 
           {/* Sticky Stack Container */}
-          <div className="flex flex-col gap-8 md:gap-24 relative">
+          <div className="flex flex-col gap-4 md:gap-24 relative">
             {mockData.home.cases.map((caseItem, index) => {
+              // Mobile offset: top margin starts smaller so cards stack nicely
+              const stickyTopMobile = `calc(6rem + ${index * 1.5}rem)`;
+              // Desktop offset: larger margin
               const stickyTopDesktop = `calc(6rem + ${index * 2}rem)`;
               
               return (
                 <div 
                   key={caseItem.id}
-                  className="md:sticky flex flex-col md:flex-row bg-white rounded-3xl md:rounded-[3rem] overflow-hidden shadow-xl md:shadow-2xl border border-silver/50"
-                  style={{ top: stickyTopDesktop }}
+                  className="sticky flex flex-col md:flex-row bg-white rounded-3xl md:rounded-[3rem] overflow-hidden shadow-xl md:shadow-2xl border border-silver/50"
+                  style={{ top: 'var(--sticky-top)' }}
+                  ref={(el) => {
+                    if (el) {
+                      el.style.setProperty('--sticky-top', window.innerWidth < 768 ? stickyTopMobile : stickyTopDesktop);
+                    }
+                  }}
                 >
                   {/* Image — on mobile uses full natural height via aspect ratio, on desktop stretches to fill */}
                   <div className="w-full aspect-[16/9] md:hidden relative overflow-hidden">
