@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
+import { ScrollToTop } from './components/ScrollToTop';
 import { Home } from './pages/Home';
 import { Sobre } from './pages/Sobre';
 import { Consultoria } from './pages/Consultoria';
@@ -12,6 +13,7 @@ import { Case } from './pages/Case';
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="min-h-screen flex flex-col bg-white">
         <Navbar />
         <main className="flex-grow pb-20 md:pb-0"> {/* mobile pb-20 prevents content overlap with bottom nav */}

@@ -187,10 +187,10 @@ export const Home: React.FC = () => {
           1. HERO
       ════════════════════════════════════════ */}
       <section className="px-6 py-20 lg:py-32 relative overflow-hidden bg-white">
-        <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-20">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
           <div 
             ref={heroRef1.ref} 
-            className={`flex-1 flex flex-col gap-8 relative z-10 w-full max-w-2xl reveal from-below ${heroRef1.isVisible ? 'visible' : ''}`}
+            className={`flex-1 flex flex-col gap-6 md:gap-8 relative z-10 w-full max-w-2xl reveal from-below ${heroRef1.isVisible ? 'visible' : ''}`}
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-silver bg-white shadow-sm w-fit self-start">
               <span className="size-2 rounded-full bg-navy animate-pulse"></span>
@@ -216,9 +216,9 @@ export const Home: React.FC = () => {
               <div className="w-80 h-80 rounded-full bg-silver/30 blur-3xl" />
             </div>
 
-            <div className="relative w-full max-w-[420px]">
+            <div className="relative w-full max-w-[380px] mx-auto lg:max-w-[420px]">
               {/* Main photo container */}
-              <div className="w-full aspect-[3/4] rounded-[2.5rem] overflow-hidden shadow-2xl border border-silver/60 bg-[#f4f4f4]">
+              <div className="w-full aspect-[3/4] max-h-[420px] lg:max-h-none rounded-[2.5rem] overflow-hidden shadow-2xl border border-silver/60 bg-[#f4f4f4]">
                 <img
                   src={hero.image}
                   alt="Suyane Melre — Consultora CFP®"
@@ -398,7 +398,7 @@ export const Home: React.FC = () => {
               return (
                 <div 
                   key={caseItem.id}
-                  className="sticky lg:sticky flex flex-col-reverse md:flex-row bg-white rounded-3xl md:rounded-[3rem] overflow-hidden shadow-2xl border border-silver/50"
+                  className="sticky flex flex-col md:flex-row bg-white rounded-3xl md:rounded-[3rem] overflow-hidden shadow-2xl border border-silver/50 pb-4 md:pb-0"
                   style={{ top: 'var(--sticky-top)' }}
                   ref={(el) => {
                     if (el) {
@@ -436,8 +436,8 @@ export const Home: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Right: Image */}
-                  <div className="flex-1 min-h-[220px] sm:min-h-[280px] md:min-h-full relative overflow-hidden">
+                  {/* Right: Image — aparece antes do conteúdo no mobile com flex-col-default (foto em cima) */}
+                  <div className="flex-1 min-h-[200px] sm:min-h-[260px] md:min-h-full relative overflow-hidden">
                     <img 
                       src={caseItem.image} 
                       alt={caseItem.title}

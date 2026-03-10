@@ -118,12 +118,12 @@ export const BrandReveal: React.FC = () => {
     return Math.round(i * gap);
   };
 
-  // Font size scales down for longer words
+  // Font size scales down for longer words — min values reduzidos para caber em mobile 375px sem quebra
   const fontSize = word.length <= 9
-    ? 'clamp(4rem, 11vw, 10rem)'
+    ? 'clamp(2.5rem, 10vw, 10rem)'
     : word.length <= 12
-      ? 'clamp(3.5rem, 9vw, 8.5rem)'
-      : 'clamp(3rem, 7.5vw, 7rem)';
+      ? 'clamp(1.9rem, 7.5vw, 8.5rem)'
+      : 'clamp(1.7rem, 6vw, 7rem)';
 
   const wordClass = [
     'font-lexend font-black leading-none tracking-tight select-none',
@@ -149,7 +149,7 @@ export const BrandReveal: React.FC = () => {
 
       {/* Animated word — letter by letter */}
       <div
-        className="min-h-[1.15em] flex items-center justify-center"
+        className="min-h-[1.15em] flex items-center justify-center w-full overflow-hidden px-2"
         aria-live="polite"
         aria-atomic="true"
       >
@@ -168,7 +168,7 @@ export const BrandReveal: React.FC = () => {
           /* Placeholder keeps height before first reveal */
           <div
             className="font-lexend font-black leading-none tracking-tight"
-            style={{ fontSize: 'clamp(3.5rem, 9vw, 8.5rem)', color: 'transparent' }}
+            style={{ fontSize: 'clamp(1.9rem, 7.5vw, 8.5rem)', color: 'transparent' }}
             aria-hidden
           >
             Suyane Melre
