@@ -9,6 +9,7 @@ import { Blog } from './pages/Blog';
 import { Post } from './pages/Post';
 import { Servico } from './pages/Servico';
 import { Case } from './pages/Case';
+import { Diagnostico } from './pages/Diagnostico';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/post" element={<Post />} />
             <Route path="/servico/:id" element={<Servico />} />
             <Route path="/case/:id" element={<Case />} />
+            <Route path="/diagnostico" element={<Diagnostico />} />
           </Routes>
         </main>
         <Footer />

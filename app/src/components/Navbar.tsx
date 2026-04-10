@@ -58,6 +58,7 @@ export const Navbar: React.FC = () => {
   const navItems = [
     { label: 'Início',    to: '/',              sectionId: null,         icon: 'home' },
     { label: 'Serviços',  to: '/#servicos',      sectionId: 'servicos',   icon: 'business_center' },
+    { label: 'Diagnóstico', to: '/#diagnostico', sectionId: 'diagnostico', icon: 'assignment' },
     { label: 'Processo',  to: '/#processo',      sectionId: 'processo',   icon: 'route' },
     { label: 'Blog',      to: '/blog',           sectionId: null,         icon: 'newspaper' },
   ];

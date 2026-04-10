@@ -4,6 +4,7 @@ import { mockData } from '../data/mockData';
 import { CertificationsMarquee } from '../components/CertificationsMarquee';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { BrandReveal } from '../components/BrandReveal';
+import { Diagnostico } from './Diagnostico';
 
 // ────────────────────────────────────────────────────────────
 // TYPES
@@ -201,7 +202,7 @@ export const Home: React.FC = () => {
             </h1>
             <p className="text-base md:text-xl text-executive max-w-xl leading-relaxed">{hero.subtitle}</p>
             <div className="flex flex-col sm:flex-row gap-4 pt-2 w-full md:w-auto">
-              <a href="https://wa.me/5581994018011" target="_blank" rel="noopener noreferrer" className="bg-navy text-white px-8 py-3.5 md:py-4 rounded-full font-bold text-center hover:scale-105 transition-transform shadow-lg w-full sm:w-auto">
+              <a href="#diagnostico" onClick={(e) => { e.preventDefault(); document.getElementById('diagnostico')?.scrollIntoView({ behavior: 'smooth' }); }} className="bg-navy text-white px-8 py-3.5 md:py-4 rounded-full font-bold text-center hover:scale-105 transition-transform shadow-lg w-full sm:w-auto">
                 Solicitar Diagnóstico
               </a>
               <Link to="/consultoria" className="bg-white text-navy border border-silver px-8 py-3.5 md:py-4 rounded-full font-bold text-center hover:bg-slate-50 transition-colors shadow-sm w-full sm:w-auto">
@@ -290,13 +291,14 @@ export const Home: React.FC = () => {
                 className={`reveal from-below ${processCtaRef.isVisible ? 'visible' : ''}`}
                 style={{ transitionDelay: '200ms' }}
               >
-                <Link
-                  to="/consultoria"
+                <a
+                  href="#diagnostico"
+                  onClick={(e) => { e.preventDefault(); document.getElementById('diagnostico')?.scrollIntoView({ behavior: 'smooth' }); }}
                   className="bg-navy text-white px-8 py-3.5 md:py-4 rounded-full font-bold justify-center sm:justify-start inline-flex items-center gap-2 hover:scale-105 transition-transform shadow-lg mt-2 w-full sm:w-auto"
                 >
                   Agendar Diagnóstico
                   <span className="material-symbols-outlined text-base">arrow_forward</span>
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -476,8 +478,8 @@ export const Home: React.FC = () => {
             Agende uma sessão de diagnóstico gratuita e descubra como podemos transformar sua relação com o dinheiro.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 pt-2 w-full md:w-auto">
-            <a href="https://wa.me/5581994018011" target="_blank" rel="noopener noreferrer" className="bg-white text-navy px-8 py-3.5 md:py-4 rounded-full font-bold text-center hover:scale-105 transition-transform shadow-xl w-full sm:w-auto">
-              Agendar Consultoria
+            <a href="#diagnostico" onClick={(e) => { e.preventDefault(); document.getElementById('diagnostico')?.scrollIntoView({ behavior: 'smooth' }); }} className="bg-white text-navy px-8 py-3.5 md:py-4 rounded-full font-bold text-center hover:scale-105 transition-transform shadow-xl w-full sm:w-auto">
+              Agendar Diagnóstico Gratuito
             </a>
             <Link to="/consultoria" className="border border-white/30 text-white px-8 py-3.5 md:py-4 rounded-full font-bold text-center hover:bg-white/10 transition-colors w-full sm:w-auto">
               Conhecer a Metodologia
@@ -511,7 +513,14 @@ export const Home: React.FC = () => {
       </section>
 
       {/* ════════════════════════════════════════
-          7. BRAND REVEAL
+          8. DIAGNÓSTICO (WIZARD FORM)
+      ════════════════════════════════════════ */}
+      <section id="diagnostico" className="bg-[#F8FAFC]">
+          <Diagnostico />
+      </section>
+
+      {/* ════════════════════════════════════════
+          9. BRAND REVEAL
       ════════════════════════════════════════ */}
       <BrandReveal />
 
