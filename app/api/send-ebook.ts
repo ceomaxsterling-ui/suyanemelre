@@ -29,9 +29,9 @@ export default async function handler(req: any, res: any) {
 
   try {
     const data = await resend.emails.send({
-      from: 'Suyane Melre <contato@suyanemelre.com.br>', // Altere para seu domínio verificado
-      to: [email],
-      bcc: ['contato@suyanemelre.com.br'], // Cópia oculta para você receber o lead
+      from: 'Suyane Melre <suyanemelre.com.br>',
+      to: [saviomaxwell088@gmail.com],
+      bcc: ['saviomaxwell088@gmail.com'],
       subject: `📈 Relatório de Diagnóstico: ${nome}`,
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #1E293B; border: 1px solid #E2E8F0; padding: 30px; border-radius: 12px;">
