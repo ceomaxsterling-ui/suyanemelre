@@ -416,7 +416,7 @@ export const Diagnostico: React.FC = () => {
           Diagnóstico Financeiro Gratuito
         </h1>
         <p className="font-inter text-[#475569] text-base leading-relaxed max-w-lg mx-auto">
-          Responda a este diagnóstico e receba diretamente no seu e-mail <strong>3 e-books exclusivos</strong> para transformar sua inteligência financeira. Leva menos de 2 minutos para responder.
+          Responda a este diagnóstico em menos de 2 minutos e ganhe um <strong>presente especial</strong> no seu e-mail: nossos <strong>3 e-books exclusivos</strong> para transformar sua inteligência financeira.
         </p>
       </div>
 
