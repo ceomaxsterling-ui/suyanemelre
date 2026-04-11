@@ -146,6 +146,7 @@ const InputField: React.FC<InputFieldProps> = ({ label, type, value, onChange, p
 export const Diagnostico: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [direction, setDirection] = useState<'next' | 'prev'>('next');
   const [animating, setAnimating] = useState(false);
   const [formData, setFormData] = useState<FormData>({
@@ -314,10 +315,26 @@ export const Diagnostico: React.FC = () => {
     }, 220);
   };
 
+  const submitForm = async () => {
+    setIsSending(true);
+    try {
+      await fetch('/api/send-ebook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+    } catch (err) {
+      console.error('Falha ao enviar e-mail via Resend', err);
+    } finally {
+      setIsSending(false);
+      setIsSubmitted(true);
+    }
+  };
+
   const handleNext = () => {
     if (!canProceed) return;
     if (currentStep < totalSteps - 1) { setDirection('next'); navigateTo(currentStep + 1); }
-    else setIsSubmitted(true);
+    else submitForm();
   };
 
   const handlePrev = () => {
@@ -338,7 +355,7 @@ export const Diagnostico: React.FC = () => {
     if (currentStep > 0 && step.field && formData[step.field] !== '') {
       const timer = setTimeout(() => {
         if (currentStep < totalSteps - 1) { setDirection('next'); navigateTo(currentStep + 1); }
-        else setIsSubmitted(true);
+        else submitForm();
       }, 380);
       return () => clearTimeout(timer);
     }
@@ -364,10 +381,10 @@ export const Diagnostico: React.FC = () => {
 
           <div className="flex flex-col gap-4">
             <h2 className="font-lexend font-bold text-4xl text-navy tracking-tight">
-              Diagnóstico Recebido!
+              Diagnóstico e E-book Enviados!
             </h2>
             <p className="font-inter text-[#475569] text-lg leading-relaxed max-w-lg">
-              Recebemos as suas respostas. Em breve a nossa equipe entrará em contato com você para conversar sobre seus investimentos.
+              Enviamos um e-mail com o seu E-book e os próximos passos. Em breve nossa equipe também entrará em contato para agendar uma conversa sobre seus investimentos.
             </p>
           </div>
 
@@ -542,19 +559,23 @@ export const Diagnostico: React.FC = () => {
             <button
               type="button"
               onClick={handleNext}
-              disabled={!canProceed}
+              disabled={!canProceed || isSending}
               className={`flex items-center gap-2 font-lexend font-bold text-[14px] px-8 py-3.5 rounded-full transition-all duration-200
-                ${canProceed
+                ${canProceed && !isSending
                   ? 'text-white hover:opacity-90 hover:scale-[1.02]'
                   : 'bg-[#E2E8F0] text-[#94A3B8] cursor-not-allowed'
                 }`}
-              style={canProceed ? {
+              style={canProceed && !isSending ? {
                 background: 'linear-gradient(135deg, #091426 0%, #1E293B 100%)',
                 boxShadow: '0 8px 24px -4px rgba(30,41,59,0.35)',
               } : undefined}
             >
-              <span className="material-symbols-outlined text-[18px]">check_circle</span>
-              Finalizar Diagnóstico
+              {isSending ? (
+                <span className="material-symbols-outlined text-[18px] animate-spin">autorenew</span>
+              ) : (
+                <span className="material-symbols-outlined text-[18px]">check_circle</span>
+              )}
+              {isSending ? 'Enviando...' : 'Finalizar Diagnóstico'}
             </button>
           )}
 
