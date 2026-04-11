@@ -318,16 +318,20 @@ export const Diagnostico: React.FC = () => {
   const submitForm = async () => {
     setIsSending(true);
     try {
-      await fetch('/api/send-ebook', {
+      const res = await fetch('/api/send-ebook', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
+
+      if (!res.ok) throw new Error('Erro no servidor');
+
+      setIsSubmitted(true);
     } catch (err) {
       console.error('Falha ao enviar e-mail via Resend', err);
+      alert('Ocorreu um erro ao enviar. Tente novamente.');
     } finally {
       setIsSending(false);
-      setIsSubmitted(true);
     }
   };
 

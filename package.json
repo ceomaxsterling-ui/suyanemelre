@@ -4,5 +4,8 @@
     "postcss": "^8.5.8",
     "react-router-dom": "^7.13.1",
     "tailwindcss": "^4.2.1"
+  },
+  "dependencies": {
+    "resend": "^6.10.0"
   }
 }
