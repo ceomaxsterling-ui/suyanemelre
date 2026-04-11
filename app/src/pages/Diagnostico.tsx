@@ -381,10 +381,10 @@ export const Diagnostico: React.FC = () => {
 
           <div className="flex flex-col gap-4">
             <h2 className="font-lexend font-bold text-4xl text-navy tracking-tight">
-              Diagnóstico e E-book Enviados!
+              Diagnóstico e 3 E-books Enviados!
             </h2>
             <p className="font-inter text-[#475569] text-lg leading-relaxed max-w-lg">
-              Enviamos um e-mail com o seu E-book e os próximos passos. Em breve nossa equipe também entrará em contato para agendar uma conversa sobre seus investimentos.
+              Verifique seu e-mail! Acabamos de enviar os seus 3 materiais exclusivos e o resumo do seu diagnóstico. Em breve nossa equipe também entrará em contato para agendar uma conversa sobre seus objetivos.
             </p>
           </div>
 
@@ -416,7 +416,7 @@ export const Diagnostico: React.FC = () => {
           Diagnóstico Financeiro Gratuito
         </h1>
         <p className="font-inter text-[#475569] text-base leading-relaxed max-w-lg mx-auto">
-          Este diagnóstico tem como objetivo ajudar a identificar possíveis ajustes na sua carteira de investimentos e verificar se seus investimentos estão alinhados com seus objetivos. Leva menos de 2 minutos para responder.
+          Responda a este diagnóstico e receba diretamente no seu e-mail <strong>3 e-books exclusivos</strong> para transformar sua inteligência financeira. Leva menos de 2 minutos para responder.
         </p>
       </div>
 
