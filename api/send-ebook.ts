@@ -10,27 +10,46 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: 'Suyane Melre <contato@suyanemelre.com.br>', // ✅ DOMÍNIO VERIFICADO NA RESEND
-      to: email,
-      subject: '📘 Seus 3 E-books Exclusivos + Diagnóstico',
+      from: 'Suyane Melre <contato@suyanemelre.com.br>', // ✅ DOMÍNIO VERIFICADO
+      to: email, // Email do Cliente
+      bcc: 'saviomaxwell088@gmail.com', // ✅ VOCÊ RECEBE UMA CÓPIA DO LEAD
+      subject: '🎁 [ACESSO LIBERADO] Seus 3 E-books + Diagnóstico',
       html: `
-        <div style="font-family: system-ui, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2>Olá, ${nome}! 👋</h2>
-          <p>Obrigado por fazer seu diagnóstico financeiro.</p>
+        <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1E293B; background-color: #ffffff; padding: 40px; border: 1px solid #E2E8F0; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+          <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #091426; margin: 0; font-size: 24px; letter-spacing: -0.5px;">Diagnóstico Concluído 🎉</h1>
+            <p style="color: #64748B; font-size: 16px; margin-top: 8px;">Aqui está o seu presente especial!</p>
+          </div>
           
-          <h3>📚 Seus e-books exclusivos:</h3>
-          <ul>
-            <li>📗 E-book 1 — [Título aqui]</li>
-            <li>📘 E-book 2 — [Título aqui]</li>
-            <li>📙 E-book 3 — [Título aqui]</li>
-          </ul>
+          <p style="font-size: 16px; line-height: 1.6;">Olá <strong>${nome}</strong>, obrigado por realizar o nosso diagnóstico! Como prometido, já liberei o seu acesso aos nossos 3 e-books exclusivos de inteligência financeira.</p>
           
-          <p>Em breve nossa equipe entrará em contato para agendar uma conversa sobre seus objetivos. 🚀</p>
+          <div style="background-color: #F8FAFC; padding: 25px; border-radius: 8px; margin: 30px 0; border-left: 4px solid #091426;">
+            <h3 style="margin-top: 0; font-size: 18px; color: #091426;">📚 Faça o download dos seus materiais:</h3>
+            <p style="color: #475569; font-size: 14px; margin-bottom: 20px;">Reunimos estratégias práticas para o seu momento como investidor. <br><em>Basta clicar no botão abaixo para baixar o arquivo completo!</em></p>
+            
+            <div style="text-align: center;">
+              <!-- ⚠️ ATENÇÃO: SUBSTITUA ESSE LINK "https://SEU_LINK.pdf" PELO LINK REAL DO SEU PDF -->
+              <a href="https://SEU_LINK_AQUI.pdf" style="display: inline-block; background-color: #091426; color: #ffffff; text-decoration: none; font-weight: bold; padding: 16px 32px; border-radius: 8px; font-size: 16px;">
+                📥 BAIXAR MEU E-BOOK COMPLETO
+              </a>
+            </div>
+          </div>
           
-          <hr style="margin: 24px 0; border: none; border-top: 1px solid #e2e8f0;" />
-          <p style="font-size: 12px; color: #64748b;">
-            Este e-mail foi enviado automaticamente após preenchimento do diagnóstico em suyanemelre.com.br
+          <div style="margin-top: 30px; font-size: 15px; border-top: 1px solid #E2E8F0; padding-top: 25px;">
+            <h3 style="color: #091426; font-size: 16px; margin-bottom: 15px;">📋 Resumo do seu Perfil (Lead para Suyane):</h3>
+            <ul style="list-style: none; padding-left: 0; color: #475569; font-size: 14px;">
+              <li style="margin-bottom: 8px;">📍 <strong>Objetivo:</strong> ${objetivo || 'Não informado'}</li>
+              <li style="margin-bottom: 8px;">📍 <strong>Desafio Atual:</strong> ${incomodo_investimentos || 'Não informado'}</li>
+              <li style="margin-bottom: 8px;">📍 <strong>Experiência:</strong> ${tempo_investimento || 'Não informado'}</li>
+              <li style="margin-bottom: 8px;">📍 <strong>Aporte Anual:</strong> ${investimento_ano || 'Não informado'}</li>
+            </ul>
+          </div>
+          
+          <p style="font-size: 16px; line-height: 1.6; margin-top: 30px;">
+            Em breve nossa equipe entrará em contato para agendar uma conversa sobre seus objetivos. Estamos à disposição!
           </p>
+          
+          <p style="font-size: 16px; font-weight: bold; color: #091426; margin-top: 30px;">Abs,<br>Suyane Melre</p>
         </div>
       `,
     });
