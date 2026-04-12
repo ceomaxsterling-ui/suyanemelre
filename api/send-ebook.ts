@@ -24,13 +24,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           <p style="font-size: 16px; line-height: 1.6;">Olá <strong>${nome}</strong>, obrigado por realizar o nosso diagnóstico! Como prometido, já liberei o seu acesso aos nossos 3 e-books exclusivos de inteligência financeira.</p>
           
           <div style="background-color: #F8FAFC; padding: 25px; border-radius: 8px; margin: 30px 0; border-left: 4px solid #091426;">
-            <h3 style="margin-top: 0; font-size: 18px; color: #091426;">📚 Faça o download dos seus materiais:</h3>
-            <p style="color: #475569; font-size: 14px; margin-bottom: 20px;">Reunimos estratégias práticas para o seu momento como investidor. <br><em>Basta clicar no botão abaixo para baixar o arquivo completo!</em></p>
+            <h3 style="margin-top: 0; font-size: 18px; color: #091426;">📚 Seus materiais liberados:</h3>
+            <ul style="color: #475569; font-size: 15px; margin-bottom: 20px; line-height: 1.8;">
+              <li><strong>E-book 01</strong>: Efeito Manada</li>
+              <li><strong>E-book 02</strong>: Os 5 erros silenciosos que podem estar travando sua carteira de investimentos</li>
+              <li><strong>E-book 03</strong>: Consultoria para a Vida</li>
+            </ul>
+            <p style="color: #475569; font-size: 14px; margin-bottom: 20px;"><em>Basta clicar no botão abaixo para acessar sua pasta exclusiva contendo todos os arquivos!</em></p>
             
             <div style="text-align: center;">
-              <!-- ⚠️ ATENÇÃO: SUBSTITUA ESSE LINK "https://SEU_LINK.pdf" PELO LINK REAL DO SEU PDF -->
-              <a href="https://SEU_LINK_AQUI.pdf" style="display: inline-block; background-color: #091426; color: #ffffff; text-decoration: none; font-weight: bold; padding: 16px 32px; border-radius: 8px; font-size: 16px;">
-                📥 BAIXAR MEU E-BOOK COMPLETO
+              <a href="https://drive.google.com/drive/u/4/folders/1ChGxEAHAuJEHJdw6vGeIvq6Cn_OvmQnZ" target="_blank" style="display: inline-block; background-color: #091426; color: #ffffff; text-decoration: none; font-weight: bold; padding: 16px 32px; border-radius: 8px; font-size: 16px;">
+                📥 ACESSAR PASTA COM OS E-BOOKS
               </a>
             </div>
           </div>
