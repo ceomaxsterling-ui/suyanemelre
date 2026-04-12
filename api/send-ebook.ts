@@ -39,20 +39,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             </div>
           </div>
           
-          <div style="margin-top: 30px; font-size: 15px; border-top: 1px solid #E2E8F0; padding-top: 25px;">
-            <h3 style="color: #091426; font-size: 16px; margin-bottom: 15px;">📋 Resumo do seu Perfil (Lead para Suyane):</h3>
-            <ul style="list-style: none; padding-left: 0; color: #475569; font-size: 14px;">
-              <li style="margin-bottom: 8px;">📍 <strong>Objetivo:</strong> ${objetivo || 'Não informado'}</li>
-              <li style="margin-bottom: 8px;">📍 <strong>Desafio Atual:</strong> ${incomodo_investimentos || 'Não informado'}</li>
-              <li style="margin-bottom: 8px;">📍 <strong>Experiência:</strong> ${tempo_investimento || 'Não informado'}</li>
-              <li style="margin-bottom: 8px;">📍 <strong>Aporte Anual:</strong> ${investimento_ano || 'Não informado'}</li>
-            </ul>
-          </div>
-          
-          <p style="font-size: 16px; line-height: 1.6; margin-top: 30px;">
-            Em breve nossa equipe entrará em contato para agendar uma conversa sobre seus objetivos. Estamos à disposição!
-          </p>
-          
           <p style="font-size: 16px; font-weight: bold; color: #091426; margin-top: 30px;">Abs,<br>Suyane Melre</p>
         </div>
       `,
