@@ -34,26 +34,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   } = req.body;
 
   try {
-    // 1. Salvar no Supabase
-    const { error: dbError } = await supabase
-      .from('leads')
-      .insert([
-        {
-          nome,
-          email,
-          whatsapp,
-          objetivo,
-          tempo_investimento,
-          carteira_estruturada,
-          incomodo_investimentos,
-          investimento_ano,
-          analise_inicial
-        }
-      ]);
+    // 1. Salvar no Supabase (apenas se configurado)
+    if (supabase) {
+      const { error: dbError } = await supabase
+        .from('leads')
+        .insert([
+          {
+            nome,
+            email,
+            whatsapp,
+            objetivo,
+            tempo_investimento,
+            carteira_estruturada,
+            incomodo_investimentos,
+            investimento_ano,
+            analise_inicial
+          }
+        ]);
 
-    if (dbError) {
-      console.error('Erro ao salvar no Supabase:', dbError);
-      // Continuamos o processo mesmo se falhar o banco, para não perder a experiência do usuário
+      if (dbError) {
+        console.error('Erro ao salvar no Supabase:', dbError.message);
+      }
     }
 
     // 2. Enviar E-mail para o Cliente (E-books)
