@@ -22,7 +22,7 @@ export const Footer: React.FC = () => {
         </div>
         <div className="pt-8 border-t border-silver flex justify-between items-center">
           <p className="text-xs text-executive flex items-center gap-1">
-            © 2026 Suyane Melre CFP® <span className="hidden sm:inline">- Todos os direitos reservados.</span>
+            © 2026 Suyane Melre CFP® <span className="hidden sm:inline">- Todos os direitos reservados.</span> <span className="text-[8px] opacity-10">v2.2</span>
           </p>
         </div>
       </div>
