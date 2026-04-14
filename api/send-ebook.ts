@@ -4,14 +4,22 @@ import { createClient } from '@supabase/supabase-js';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Inicializa Supabase
-const supabase = createClient(
-  process.env.SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ''
-);
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+// Inicializa Supabase apenas se houver credenciais
+const supabase = (supabaseUrl && supabaseKey) 
+  ? createClient(supabaseUrl, supabaseKey)
+  : null;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).end();
+
+  if (!supabase) {
+    console.error('❌ ERRO CRÍTICO: Credenciais do Supabase não configuradas no ambiente (Vercel).');
+    // Não paramos o fluxo para não prejudicar o usuário final, 
+    // mas o log acima aparecerá no dashboard da Vercel para o desenvolvedor.
+  }
 
   const {
     nome,
