@@ -227,20 +227,7 @@ export const Home: React.FC = () => {
                 />
               </div>
 
-              {/* Name badge — bottom left floating */}
-              <div className="absolute -bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-xl border border-silver flex items-center gap-4">
-                <div className="size-10 rounded-full bg-navy flex items-center justify-center shrink-0">
-                  <span className="font-lexend font-bold text-white text-sm">SM</span>
-                </div>
-                <div>
-                  <p className="font-lexend font-bold text-navy text-sm leading-none">Suyane Melre</p>
-                  <p className="text-[10px] uppercase tracking-widest text-executive mt-0.5">CFP® · +10 Anos de Experiência</p>
-                </div>
-                <div className="ml-auto flex items-center gap-1">
-                  <span className="size-2 rounded-full bg-green-400 animate-pulse" />
-                  <span className="text-[10px] text-executive font-medium">Disponível</span>
-                </div>
-              </div>
+              {/* Name badge removed as requested */}
 
               {/* Floating credential badge — top right */}
               <div className="absolute -top-3 -right-3 bg-navy text-white rounded-xl px-3 py-2 shadow-lg text-center">
@@ -318,25 +305,7 @@ export const Home: React.FC = () => {
                       className={`w-full h-full object-cover object-top transition-all duration-1000 ${processImageRef.isVisible ? 'scale-100' : 'scale-105'}`}
                     />
                   </div>
-                  <div
-                    className={`absolute -bottom-5 -left-5 bg-white border border-silver rounded-2xl px-5 py-4 shadow-xl flex items-center gap-3 reveal from-below ${processImageRef.isVisible ? 'visible' : ''}`}
-                    style={{ transitionDelay: '500ms', transitionDuration: '700ms' }}
-                  >
-                    <div className="size-10 rounded-full bg-navy/5 flex items-center justify-center">
-                      <span className="material-symbols-outlined text-navy text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
-                    </div>
-                    <div>
-                      <p className="font-lexend font-bold text-navy text-sm">Método Proprietário</p>
-                      <p className="text-[10px] text-executive uppercase tracking-widest">10+ anos refinado</p>
-                    </div>
-                  </div>
-                  <div
-                    className={`absolute -top-4 -right-4 bg-navy text-white rounded-2xl px-4 py-3 shadow-xl text-center reveal from-right ${processImageRef.isVisible ? 'visible' : ''}`}
-                    style={{ transitionDelay: '600ms', transitionDuration: '700ms' }}
-                  >
-                    <p className="font-lexend font-bold text-2xl">98%</p>
-                    <p className="text-[10px] uppercase tracking-widest text-white/70">Satisfação</p>
-                  </div>
+                  {/* Decorative badges removed as requested */}
                 </div>
               </div>
             </div>

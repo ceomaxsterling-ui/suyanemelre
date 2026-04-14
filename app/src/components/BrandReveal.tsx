@@ -120,10 +120,10 @@ export const BrandReveal: React.FC = () => {
 
   // Font size scales down for longer words — min values reduzidos para caber em mobile 375px sem quebra
   const fontSize = word.length <= 9
-    ? 'clamp(2.5rem, 10vw, 10rem)'
+    ? 'clamp(2.5rem, 9vw, 9rem)'
     : word.length <= 12
-      ? 'clamp(1.9rem, 7.5vw, 8.5rem)'
-      : 'clamp(1.7rem, 6vw, 7rem)';
+      ? 'clamp(1.9rem, 7vw, 7.5rem)'
+      : 'clamp(1.7rem, 5.5vw, 6.5rem)';
 
   const wordClass = [
     'font-lexend font-black leading-none tracking-tight select-none',
@@ -149,7 +149,7 @@ export const BrandReveal: React.FC = () => {
 
       {/* Animated word — letter by letter */}
       <div
-        className="min-h-[1.15em] flex items-center justify-center w-full overflow-hidden px-2"
+        className="min-h-[1.15em] flex items-center justify-center w-full px-6 md:px-12"
         aria-live="polite"
         aria-atomic="true"
       >
@@ -176,16 +176,7 @@ export const BrandReveal: React.FC = () => {
         )}
       </div>
 
-      {/* Certification line */}
-      <p
-        className="mt-10 text-sm text-executive max-w-xs leading-relaxed transition-all duration-700 delay-200"
-        style={{
-          opacity:   isVisible ? 1 : 0,
-          transform: isVisible ? 'none' : 'translateY(10px)',
-        }}
-      >
-        CFP® · CEA · +10 Anos de Experiência
-      </p>
+      {/* Certification line removed as requested */}
 
       {/* Progress dots */}
       <div className="mt-6 flex gap-2 items-center">

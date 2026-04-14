@@ -8,7 +8,6 @@ interface BadgeProps {
 const badges: BadgeProps[] = [
   { icon: 'verified', label: 'CFP® Certificada' },
   { icon: 'workspace_premium', label: 'CEA Certificada' },
-  { icon: 'star', label: '+10 Anos de Experiência' },
   { icon: 'handshake', label: 'Acompanhamento Especializado' },
   { icon: 'trending_up', label: 'Estratégia Personalizada' },
 ];

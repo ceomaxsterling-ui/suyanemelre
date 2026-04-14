@@ -10,6 +10,7 @@
     "tailwindcss": "^4.2.1"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.103.0",
     "@vercel/node": "^5.7.4",
     "resend": "^6.10.0"
   }
