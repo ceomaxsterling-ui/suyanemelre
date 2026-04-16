@@ -33,29 +33,45 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     analise_inicial
   } = req.body;
 
-  try {
-    // 1. Salvar no Supabase (apenas se configurado)
-    if (supabase) {
-      const { error: dbError } = await supabase
-        .from('leads')
-        .insert([
-          {
-            nome,
-            email,
-            whatsapp,
-            objetivo,
-            tempo_investimento,
-            carteira_estruturada,
-            incomodo_investimentos,
-            investimento_ano,
-            analise_inicial
-          }
-        ]);
+  // Verificação de segurança adicional para depuração
+  console.log(`[DEBUG] Processando lead: ${email || 'sem email'} em ${new Date().toISOString()}`);
 
-      if (dbError) {
-        console.error('Erro ao salvar no Supabase:', dbError.message);
-      }
+  if (!supabaseUrl || !supabaseKey) {
+    console.error('❌ ERRO CRÍTICO: Credenciais do Supabase não configuradas no ambiente (Vercel).');
+    return res.status(500).json({ 
+      error: 'Configuração do banco de dados ausente na Vercel.',
+      details: 'As variáveis SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY não foram encontradas.'
+    });
+  }
+
+  try {
+    // 1. Salvar no Supabase
+    const { error: dbError } = await supabase
+      .from('leads')
+      .insert([
+        {
+          nome: nome || 'Não informado',
+          email: email || 'Não informado',
+          whatsapp: whatsapp || 'Não informado',
+          objetivo: objetivo || 'Não informado',
+          tempo_investimento: tempo_investimento || 'Não informado',
+          carteira_estruturada: carteira_estruturada || 'Não informado',
+          incomodo_investimentos: incomodo_investimentos || 'Não informado',
+          investimento_ano: investimento_ano || 'Não informado',
+          analise_inicial: analise_inicial || 'Não informado'
+        }
+      ]);
+
+    if (dbError) {
+      console.error('❌ ERRO SUPABASE:', dbError.message);
+      return res.status(500).json({ 
+        error: 'Falha ao salvar no banco de dados', 
+        details: dbError.message,
+        hint: 'Verifique se a tabela "leads" tem todas as colunas necessárias e se as permissões estão corretas.'
+      });
     }
+
+    console.log('✅ Lead salvo com sucesso no Supabase.');
 
     // 2. Enviar E-mail para o Cliente (E-books)
     const { error: clientEmailError } = await resend.emails.send({
