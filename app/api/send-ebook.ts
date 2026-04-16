@@ -1,18 +1,48 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { Resend } from 'resend';
+import { createClient } from '@supabase/supabase-js';
 
+// Inicializa Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Inicializa Supabase (SERVER-SIDE - usa service_role se disponível)
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { nome, email, objetivo, tempo_investimento, carteira_estruturada, incomodo_investimentos, investimento_ano, analise_inicial } = req.body;
+  const { nome, email, whatsapp, objetivo, tempo_investimento, carteira_estruturada, incomodo_investimentos, investimento_ano, analise_inicial } = req.body;
 
   try {
-    const { data, error } = await resend.emails.send({
-      from: 'Suyane Melre <contato@suyanemelre.com.br>', // ✅ DOMÍNIO VERIFICADO
-      to: email, // Email do Cliente
-      bcc: 'saviomaxwell088@gmail.com', // ✅ VOCÊ RECEBE UMA CÓPIA DO LEAD
+    // 🔹 1. SALVAR NO SUPABASE (antes de enviar o e-mail)
+    const { error: dbError } = await supabase
+      .from('leads')
+      .insert({
+        nome,
+        email,
+        whatsapp,
+        objetivo,
+        tempo_investimento,
+        carteira_estruturada,
+        incomodo_investimentos,
+        investimento_ano,
+        analise_inicial,
+        criado_em: new Date().toISOString(),
+      });
+
+    if (dbError) {
+      console.error('Supabase error:', dbError);
+      // Continua mesmo se falhar (não bloqueia o e-mail)
+    }
+
+    // 🔹 2. ENVIAR E-MAIL VIA RESEND (código original)
+    const { data, error: emailError } = await resend.emails.send({
+      from: 'Suyane Melre <contato@suyanemelre.com.br>',
+      to: email,
+      bcc: 'saviomaxwell088@gmail.com',
       subject: '🎁 [ACESSO LIBERADO] Seus 3 E-books + Diagnóstico',
       html: `
         <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1E293B; background-color: #ffffff; padding: 40px; border: 1px solid #E2E8F0; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
@@ -44,9 +74,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       `,
     });
 
-    if (error) {
-      console.error('Resend error:', error);
-      return res.status(500).json({ error: error.message });
+    if (emailError) {
+      console.error('Resend error:', emailError);
+      return res.status(500).json({ error: emailError.message });
     }
 
     console.log('Email sent:', data);
@@ -54,6 +84,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     
   } catch (error) {
     console.error('Handler error:', error);
-    return res.status(500).json({ error: 'Falha ao enviar e-mail' });
+    return res.status(500).json({ error: 'Falha ao processar solicitação' });
   }
 }
